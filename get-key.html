@@ -193,7 +193,8 @@
                         });
 
                     $.ajax({
-                        url: `https://api.vebo.xyz/api/match/${id}`,
+                        url: `
+https://api.thapcam.xyz/api/match/${id}`,
                     })
                         .done(function (response) {
                             if (response.data.match_status === "finished") {
@@ -229,7 +230,7 @@
                 }
                 else {
                     $.ajax({
-                        url: `https://api.vebo.xyz/api/news/xoilac/detail/${id}`,
+                        url: `https://api.thapcam.xyz/news/xoilac/detail/${id}`,
                     })
                         .done(function (response) {
                             console.log(response)
