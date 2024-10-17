@@ -197,7 +197,7 @@
 
                     $.ajax({
                         url: `
-https://api.thapcam.xyz/api/match/tc/{id}/no/meta/${id}`,
+ https://api.thapcam.xyz/api/match/tc/live/{id}/no/meta/${id}`,
                     })
                         .done(function (response) {
                             if (response.data.match_status === "finished") {
