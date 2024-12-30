@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="./images/live.png" />
     <title id="pageTitle">Fixtures</title>
-    <meta property="og:image" content="https://thaidqt.github.io/vb/images/thumbnail.png" />
-    <meta property="og:url" content="https://thaidqt.github.io/vb/" />
+    <meta property="og:image" content="https://tchiphuong.github.io/iptv/images/thumbnail.png" />
+    <meta property="og:url" content="https://tchiphuong.github.io/iptv" />
     <meta property="og:type" content="article" />
     <meta property="og:image:type" content="image/jpeg" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -17,10 +17,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
     <link rel="stylesheet" href="css/styles.css" />
     <link rel="stylesheet" href="./src-new//build/tailwind.css" />
-    <link rel="canonical" href="https://live.thapcam72.net/">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
-    <link rel="stylesheet" href="https://t5c2.bdhub.link/css/style.css?v=1.1.32">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.10/tailwind.min.css" />
     <style>
         body,
         html {
@@ -39,7 +36,7 @@
         }
 
         .main-content {
-            margin-bottom: -100px;
+            margin-bottom: 0;
         }
 
         @media (min-width: 1024px) {
@@ -75,7 +72,11 @@
             <span class="hidden md:block">Trang chủ</span>
         </a>
         <span>/</span>
-        <div id="title" class="font-bold"></div>
+        <img id="home" class="w-8 h-8 object-cover hidden">
+        <span> vs </span>
+        <img id="away" class="w-8 h-8 object-cover hidden">
+        <span> | </span>
+        <!-- <div id="title" class="font-bold"></div> -->
         <div id="commentators" class="flex -space-x-4 rtl:space-x-reverse"></div>
         <ul id="playUrl" class="flex gap-2 flex-wrap items-center flex-grow"></ul>
         <button id="chatButton" class="px-3 py-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hidden" title="Bật/tắt chat">
@@ -196,8 +197,7 @@
                         });
 
                     $.ajax({
-                        url: `
- https://api.thapcam.xyz/api/match/tc/live/{id}/no/meta/${id}`,
+                        url: `https://api.vebo.xyz/api/match/${id}`,
                     })
                         .done(function (response) {
                             if (response.data.match_status === "finished") {
@@ -208,7 +208,7 @@
                             }
                             console.log(response)
                             var iframe = `<iframe id="videoFrame" 
-                                src="https://chat.vebotv.me/?token=&room=${response.data.key_sync}" 
+                                src="https://chat.vebotv.me/?token=&room=${response.data.room_id}" 
                                 width="100%" 
                                 height="100%"
                                 allowfullscreen="true" 
@@ -222,7 +222,9 @@
 
 
                             $("#pageTitle").text(response.data.name);
-                            $("#title").text(`${response.data.name}`);
+                            // $("#title").text(`${response.data.name}`);
+                            $("#home").attr("src", response.data.home.logo).attr("alt", response.data.home.name).attr("title", response.data.home.name).removeClass("hidden");
+                            $("#away").attr("src", response.data.away.logo).attr("alt", response.data.away.name).attr("title", response.data.away.name).removeClass("hidden");
                         })
                         .fail(function () {
                             CloseLoading();
@@ -233,7 +235,7 @@
                 }
                 else {
                     $.ajax({
-                        url: `https://api.thapcam.xyz/api/news/xoilac/detail/${id}`,
+                        url: `https://api.vebo.xyz/api/news/xoilac/detail/${id}`,
                     })
                         .done(function (response) {
                             console.log(response)
@@ -258,7 +260,7 @@
         function setPlayer(url) {
             if (url) {
                 var iframe = `<iframe id="videoFrame" 
-                src="https://t.fdcdn.xyz/v11/?link=${url}&t=tr&theme_id=ck&is_live=0" 
+                src="https://t.fdcdn.xyz/v11/?link=${url}&t=tr&theme_id=tc&is_live=0" 
                 width="100%" 
                 height="100%"
                 allowfullscreen="true" 
